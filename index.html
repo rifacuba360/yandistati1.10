@@ -1,209 +1,107 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Promoción de Fiestas</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promoción de Fiestas</title>
+<style>
+body, html {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
 
-        /* Intro container */
-        #intro {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            background: radial-gradient(circle, #000 40%, #1a1a1a 100%);
-            z-index: 9999;
-            animation: fadeInIntro 1.5s ease;
-        }
+#intro {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: black;
+    z-index: 9999;
+}
 
-        @keyframes fadeInIntro {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+#introVideo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        /* Humo */
-        #smokeCanvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            opacity: 0.6;
-        }
+#logo {
+    color: white;
+    font-size: 4rem;
+    opacity: 0;
+    text-shadow: 0 0 20px #ff6600;
+    position: absolute;
+}
 
-        #title {
-            opacity: 0;
-            color: white;
-            font-size: 3.5rem;
-            margin-top: 20px;
-            letter-spacing: 4px;
-            text-shadow: 0 0 20px #ff6600;
-            transition: opacity 2.5s ease;
-        }
+#content {
+    display: none;
+    padding: 20px;
+    color: white;
+    animation: fadeInContent 2s ease forwards;
+}
 
-        /* Content */
-        #content {
-            display: none;
-            padding: 20px;
-            color: white;
-            animation: fadeInContent 2s ease forwards;
-        }
+@keyframes fadeInContent {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-        @keyframes fadeInContent {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Gallery */
-        .gallery {
-            max-width: 650px;
-            margin: auto;
-            position: relative;
-            box-shadow: 0 0 40px rgba(255, 120, 0, 0.3);
-            border-radius: 15px;
-        }
-
-        .gallery img {
-            width: 100%;
-            border-radius: 15px;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery img:hover {
-            transform: scale(1.03);
-        }
-
-        .arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 10px 15px;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            cursor: pointer;
-            font-size: 2rem;
-            border-radius: 5px;
-            backdrop-filter: blur(5px);
-            transition: 0.3s ease;
-        }
-
-        .arrow:hover {
-            background: rgba(255, 120, 0, 0.7);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .left { left: 0; }
-        .right { right: 0; }
-    </style>
+</style>
 </head>
 <body>
 
-    <!-- Intro con animación 3D del ave fénix -->
-    <div id="intro">
-        <canvas id="phoenixCanvas"></canvas>
-        <div id="title">Promociones & Eventos</div>
-        <audio id="introAudio" src="audio/intro.mp3"></audio>
-    </div>
+<!-- Intro con video -->
+<div id="intro">
+    <video id="introVideo" autoplay muted playsinline>
+        <source src="videos/phoenix.mp4" type="video/mp4">
+    </video>
+    <div id="logo">Mi Logo</div>
+    <audio id="introAudio" src="audio/intro.mp3"></audio>
+</div>
 
-    <!-- Contenido principal -->
-    <div id="content">
-        <h1>Promociones de Fiestas y 15 Años</h1>
+<!-- Contenido principal -->
+<div id="content">
+    <h1>Promociones de Fiestas y 15 Años</h1>
+    <!-- Aquí va tu galería -->
+</div>
 
-        <div class="gallery">
-            <span class="arrow left" onclick="prevImage()">◀</span>
-            <img id="galleryImage" src="fotos/1.jpg" />
-            <span class="arrow right" onclick="nextImage()">▶</span>
-        </div>
-    </div>
+<script>
+// Variables
+const introVideo = document.getElementById('introVideo');
+const logo = document.getElementById('logo');
+const introAudio = document.getElementById('introAudio');
+const intro = document.getElementById('intro');
+const content = document.getElementById('content');
 
+// Reproducir audio al cargar
+window.onload = () => {
+    introAudio.play();
+};
 
-    <script>
-        /* ------------------ Animación del Ave Fénix (3D simple con Three.js) ------------------ */
-        let scene, camera, renderer, phoenix;
+// Cuando el video termina
+introVideo.onended = () => {
+    // Animación de "desvanecer a polvo" simulada con fadeout
+    introVideo.style.transition = 'opacity 1s ease';
+    introVideo.style.opacity = 0;
 
-        function initPhoenix() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('phoenixCanvas'), alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
+    // Mostrar logo tras el desvanecimiento
+    setTimeout(() => {
+        logo.style.opacity = 1; // Mostrar logo
+    }, 1000);
 
-            // Luz
-            const light = new THREE.PointLight(0xffffff, 2, 500);
-            light.position.set(10, 10, 10);
-            scene.add(light);
-
-            const loader = new THREE.GLTFLoader();
-            loader.load('models/phoenix/scene.gltf', function(gltf) {
-                phoenix = gltf.scene;
-                phoenix.scale.set(2, 2, 2);
-                scene.add(phoenix);
-            });
-
-            camera.position.z = 5;
-
-            animatePhoenix();
-        }
-
-        function animatePhoenix() {
-            requestAnimationFrame(animatePhoenix);
-
-            if (phoenix) {
-                phoenix.rotation.y += 0.01;
-                phoenix.position.y = Math.sin(Date.now() * 0.002) * 0.5;
-            }
-
-            renderer.render(scene, camera);
-        }
-
-        /* ------------------ Intro con audio y transición ------------------ */
-        window.onload = () => {
-            initPhoenix();
-            const audio = document.getElementById('introAudio');
-            audio.play();
-
-            setTimeout(() => {
-                document.getElementById('title').style.opacity = 1;
-            }, 1500);
-
-            setTimeout(() => {
-                document.getElementById('intro').style.opacity = 0;
-                setTimeout(() => {
-                    document.getElementById('intro').style.display = 'none';
-                    document.getElementById('content').style.display = 'block';
-                }, 2000);
-            }, 6000);
-        }
-
-        /* ------------------ Galería ------------------ */
-        const images = ["fotos/1.jpg", "fotos/2.jpg", "fotos/3.jpg"]; 
-        let index = 0;
-
-        function nextImage() {
-            index = (index + 1) % images.length;
-            document.getElementById('galleryImage').src = images[index];
-        }
-
-        function prevImage() {
-            index = (index - 1 + images.length) % images.length;
-            document.getElementById('galleryImage').src = images[index];
-        }
-    </script>
-
-    <!-- Librería para cargar modelos 3D -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/examples/js/loaders/GLTFLoader.js"></script>
+    // Mantener logo 1 segundo
+    setTimeout(() => {
+        intro.style.display = 'none';
+        content.style.display = 'block';
+    }, 2000);
+};
+</script>
 
 </body>
 </html>
