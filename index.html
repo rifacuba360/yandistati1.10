@@ -140,28 +140,35 @@ const introAudio = document.getElementById('introAudio');
 const intro = document.getElementById('intro');
 const content = document.getElementById('content');
 
-// Reproducir audio al cargar
+// Ajustar intro al alto de la pantalla
+function ajustarIntro() {
+    intro.style.height = window.innerHeight + 'px';
+}
+
+// Ejecutar al cargar la página
 window.onload = () => {
     introAudio.play();
+    ajustarIntro();
 };
+
+// Ejecutar cuando cambie el tamaño de la ventana
+window.onresize = ajustarIntro;
 
 // Cuando el video termina
 introVideo.onended = () => {
-    // Animación de "desvanecer a polvo" simulada con fadeout
     introVideo.style.transition = 'opacity 1s ease';
     introVideo.style.opacity = 0;
 
-    // Mostrar logo tras el desvanecimiento
     setTimeout(() => {
-        logo.style.opacity = 1; // Mostrar logo
+        logo.style.opacity = 1;
     }, 1000);
 
-    // Mantener logo 1 segundo
     setTimeout(() => {
         intro.style.display = 'none';
         content.style.display = 'block';
     }, 2000);
 };
+
 </script>
 
 </body>
