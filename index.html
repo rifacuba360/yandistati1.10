@@ -68,40 +68,66 @@ body, html {
 <!-- Contenido principal -->
 <div id="content">
 
-    <!-- Menú de navegación -->
+  <!-- MENÚ DE NAVEGACIÓN -->
+  <header>
     <nav>
       <ul>
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#galeria">Galería</a></li>
+        <li><a href="#servicios">Servicios</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
+  </header>
 
-    <!-- Sección Inicio -->
-    <section id="inicio">
-      <h1>Bienvenidos a nuestras fiestas</h1>
-      <p>Información inicial, promociones, etc.</p>
-    </section>
+  <!-- SECCIÓN INICIO -->
+  <section id="inicio" class="section">
+    <h1>Bienvenidos a Nuestras Fiestas</h1>
+    <p>Ofrecemos las mejores promociones para fiestas y 15 años. Decoración, animación y diversión garantizada.</p>
+    <a class="btn" href="#galeria">Ver Galería</a>
+  </section>
 
-    <!-- Sección Galería -->
-    <section id="galeria">
-      <h2>Galería de Fotos</h2>
-      <div class="gallery">
-          <span class="arrow left" onclick="prevImage()">◀</span>
-          <img id="galleryImage" src="fotos/1.jpg">
-          <span class="arrow right" onclick="nextImage()">▶</span>
+  <!-- SECCIÓN GALERÍA -->
+  <section id="galeria" class="section">
+    <h2>Galería de Fotos</h2>
+    <div class="gallery">
+      <span class="arrow left" onclick="prevImage()">◀</span>
+      <img id="galleryImage" src="fotos/1.jpg">
+      <span class="arrow right" onclick="nextImage()">▶</span>
+    </div>
+  </section>
+
+  <!-- SECCIÓN SERVICIOS / PROMOCIONES -->
+  <section id="servicios" class="section">
+    <h2>Servicios y Promociones</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Paquete Básico</h3>
+        <p>Decoración + Música + Fotos</p>
       </div>
-    </section>
+      <div class="card">
+        <h3>Paquete Premium</h3>
+        <p>Todo incluido con animación 3D y DJ profesional</p>
+      </div>
+      <div class="card">
+        <h3>Paquete VIP</h3>
+        <p>Evento completo con iluminación, video y efectos especiales</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Sección Contacto -->
-    <section id="contacto">
-      <h2>Contacto</h2>
-      <p>Teléfono, WhatsApp, correo...</p>
-    </section>
+  <!-- SECCIÓN CONTACTO -->
+  <section id="contacto" class="section">
+    <h2>Contacto</h2>
+    <p>Teléfono: 123-456-7890</p>
+    <p>Email: contacto@fiestas.com</p>
+    <p>WhatsApp: 987-654-3210</p>
+    <a class="btn" href="mailto:contacto@fiestas.com">Enviar Email</a>
+  </section>
 
 </div>
 
-
+    
 <script>
 // Variables
 const introVideo = document.getElementById('introVideo');
