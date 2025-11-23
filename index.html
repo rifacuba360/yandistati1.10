@@ -67,9 +67,40 @@ body, html {
 
 <!-- Contenido principal -->
 <div id="content">
-    <h1>Promociones de Fiestas y 15 Años</h1>
-    <!-- Aquí va tu galería -->
+
+    <!-- Menú de navegación -->
+    <nav>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Sección Inicio -->
+    <section id="inicio">
+      <h1>Bienvenidos a nuestras fiestas</h1>
+      <p>Información inicial, promociones, etc.</p>
+    </section>
+
+    <!-- Sección Galería -->
+    <section id="galeria">
+      <h2>Galería de Fotos</h2>
+      <div class="gallery">
+          <span class="arrow left" onclick="prevImage()">◀</span>
+          <img id="galleryImage" src="fotos/1.jpg">
+          <span class="arrow right" onclick="nextImage()">▶</span>
+      </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <p>Teléfono, WhatsApp, correo...</p>
+    </section>
+
 </div>
+
 
 <script>
 // Variables
